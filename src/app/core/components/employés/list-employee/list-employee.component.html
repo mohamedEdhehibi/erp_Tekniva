@@ -1,0 +1,108 @@
+<div class="col-12">
+    <app-menu></app-menu>
+</div>
+
+<div class="col-12">
+
+    <p-toast></p-toast>
+    <div class="col-12">
+        <div class="my-2">
+            <h1 style="text-align: left ; font-family:Georgia, 'Times New Roman', Times, serif;margin-left:10px;">
+                Gestion des Employés</h1>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="col-12">
+
+            <p-table #dt [value]="employes|filter:filtered" [paginator]="true" [rows]="10"
+                [globalFilterFields]="['employe.registrationNumber','employe.lastName','employe.firstName','employe.hireDate']"
+                [showCurrentPageReport]="true" responsiveLayout="scroll"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[10,25,50]">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                        <h5 class="m-0"></h5>
+                        <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" [(ngModel)]="filtered" placeholder="Search..."
+                                class="w-full sm:w-auto" />
+                        </span>
+                        <button routerLink="/employé/nouveau" pButton
+                            class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1"
+                            icon="pi pi-user-plus" label="Ajouter Nouveau"></button>
+                    </div>
+                    <br> <br>
+
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="name" class="white-space-nowrap" style="width:25%">Matricule
+                            <p-sortIcon field="name"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="country.name" class="white-space-nowrap" style="width:25%">Nom
+                            <p-sortIcon field="country.name"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="date" class="white-space-nowrap" style="width:25%">Prénom <p-sortIcon
+                                field="date"></p-sortIcon></th>
+
+                        <th pSortableColumn="name" class="white-space-nowrap" style="width:25%">Action <p-sortIcon
+                                field="name"></p-sortIcon></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-employe>
+                    <tr>
+                        <td>{{employe.registrationNumber}}</td>
+                        <td>{{employe.lastName}}</td>
+                        <td>{{employe.firstName}}</td>
+
+                        <div class="flex">
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                                (click)="EditEmployee(employe.id)"></button>
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                (click)="DeleteEmployee(employe.id)"></button>
+                        </div>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+
+    <p-dialog [(visible)]="employeeDialog" [style]="{width: '450px'}" header="chaine Details" [modal]="true"
+        class="p-fluid">
+        <ng-template pTemplate="content">
+            <!-- <img [src]="'assets/demo/images/chaine/' + chaine.image" [alt]="chaine.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="chaine.image"> -->
+            <div class="field">
+                <label for="name">Matricule</label>
+                <input type="text" id="name" pInputText [(ngModel)]="employe.registrationNumber" required
+                    [ngClass]="{'ng-invalid ng-dirty' : submitted && !employe.registrationNumber}" />
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !employe.registrationNumber">la matricule est
+                    obligatoire.</small>
+            </div>
+            <div class="field">
+                <label for="code">Nom</label>
+                <input type="text" id="description" pInputText [(ngModel)]="employe.lastName"
+                    [ngClass]="{'ng-invalid ng-dirty' : submitted && !employe.lastName}">
+            </div>
+            <div class="field ">
+                <label for="quantity">Prénom</label>
+                <input type="text" id="description" pInputText [(ngModel)]="employe.firstName"
+                    [ngClass]="{'ng-invalid ng-dirty' : submitted && !employe.firstName}">
+            </div>
+
+        </ng-template>
+
+    </p-dialog>
+    <p-dialog [(visible)]="deleteEmployeeDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+        <div class="flex align-items-center justify-content-center">
+            <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+            <span *ngIf="employe">Etes-vous sûr que vous voulez supprimer?<b>{{employe.firstName}}</b>?</span>
+        </div>
+        <ng-template pTemplate="footer">
+            <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non"
+                (click)="deleteEmployeeDialog = false"></button>
+            <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui"
+                (click)="confirmDelete()"></button>
+        </ng-template>
+    </p-dialog>

@@ -1,0 +1,162 @@
+<div class="col-12">
+    <app-menu-chaine></app-menu-chaine>
+</div>
+<div class="grid">
+    <div class="col-12">
+    
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <div class="col-12">
+                <div class="my-2">
+                 <h1  style="text-align: left; font-family:Georgia, 'Times New Roman', Times, serif;">Filiere</h1>
+                 </div>
+           </div>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Ajouter" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Supprimer" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedfilieres()" [disabled]="!selectedfilieres || !selectedfilieres.length"></button>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="filieres|filter:filtered" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedfilieres" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0"></h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text"  [(ngModel)]="filtered" placeholder="Recherche..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                        <tr>
+                        <th style="width: 3rem" scope="col">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                     
+                        <th pSortableColumn="name" scope="col">Designation<p-sortIcon field="name"></p-sortIcon></th>
+                        <th pSortableColumn="code" scope="col">address<p-sortIcon field="code"></p-sortIcon></th>
+                        <th pSortableColumn="name" scope="col">téléphone<p-sortIcon field="name"></p-sortIcon></th>
+                        <th pSortableColumn="category" scope="col">email <p-sortIcon field="category"></p-sortIcon></th>
+                        <th pSortableColumn="category" scope="col">création<p-sortIcon field="category"></p-sortIcon></th>
+                        <th pSortableColumn="category" scope="col">Modification<p-sortIcon field="category"></p-sortIcon></th>
+                        </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-filiere>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="filiere"></p-tableCheckbox>
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Designation </span>
+                        
+                            {{filiere.designation}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">address</span>
+                            {{filiere.address}}
+                        </td>
+                        
+                         
+                         <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">téléphone </span>
+                            {{filiere.phone}}
+                        </td> 
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">email</span>
+                            {{filiere.email }}
+                        </td> 
+                         <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">date de création </span>
+                            {{filiere.createdAt |date:'shortDate'}}
+                        </td> 
+                         <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">date de modification</span>
+                            {{filiere.updatedAt |date:'shortDate'}}
+                        </td> 
+                        <td>
+                            <div class="flex">
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editfiliere(filiere.id)"></button>
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deletefiliere(filiere.id)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="filiereDialog" [style]="{width: '450px'}" header="filiere Details" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+              
+          
+                <div class="field">
+                    <label for="name">Désignation *</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="filiere.designation" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !filiere.designation}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !filiere.designation">Désignation est obligatoire</small>
+                </div>
+                <div class="field">
+                    <label for="name">email *</label>
+                    <input type="text" pInputText id="email" [(ngModel)]="filiere.email" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !filiere.email}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !filiere.email">Désignation est obligatoire</small>
+                </div>
+                <div class="field">
+                    <label for="description">Enterprise *</label>
+                    <p-dropdown [(ngModel)]="filiere.company"optionValue="value" [options]="company" placeholder="Select">
+                        <ng-template let-option pTemplate="item">
+                          <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                      </p-dropdown>
+                </div> 
+                         
+                <div class="field ">
+                    <label for="quantity">adress *</label>
+                    <input type="text" id="adress" pInputText [(ngModel)]="filiere.address"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !filiere.address}">
+                </div>
+                <div class="field ">
+                    <label for="quantity">téléphone *</label>
+                    <input type="number" id="telephone" pInputText [(ngModel)]="filiere.phone"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !filiere.phone}">
+                </div>
+                
+                  
+
+            </ng-template> 
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="enregistré" icon="pi pi-check" class="p-button-text" (click)="savefiliere()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deletefiliereDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="filiere">Etes-vous sûr que vous voulez supprimer?<b>{{filiere.designation}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deletefiliereDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deletefilieresDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Voulez-vous vraiment supprimer les Filieres sélectionnés?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deletefilieresDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div> 
+
+

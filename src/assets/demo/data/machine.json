@@ -1,0 +1,21 @@
+{
+	"data": [
+		{
+            "idMachine":"D1251",           
+            "designation": "scie automatique",
+            "code": "S56",
+            "barCode": "df6565s",
+            "nSerie":"1654665",
+            "purchaseDate":"Thu Mar 16 2022 11:56:16 GMT+0100 (UTC+01:00)",
+            "price":"100000",
+            "supplier":"ACEM",
+            "photo":"tttt.png",
+            "isActive":"active",
+            "createdBy":"iheb",
+            "createAt":"Thu Mar 16 2022 11:56:16 GMT+0100 (UTC+01:00)",
+            "updateAt":"12/04/2023",
+            "machineFamilyId":"Coupage"
+           
+        }
+	]
+}

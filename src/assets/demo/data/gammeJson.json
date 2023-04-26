@@ -1,0 +1,44 @@
+{
+	"data": [
+		{
+			"GammeID": 1,
+			"designation": "gamme 1",
+			
+			"FamilyID": "Famille 1",
+
+			"timeTotlal": "5",
+			"createdAt": "11/01/2023",
+			"SubFamilyID":"Sous Famille 1",
+			"operationTotal":2,
+			"season":"été"
+			
+		},
+		{
+			"GammeID": 2,
+			"designation": "gamme 2",
+			"FamilyID": "Famille 1",
+			"timeTotlal": "12",
+			"createdAt": "11/01/2023",
+			"SubFamilyID":"Sous Famille 3",
+			"operationTotal":2,
+			"season":"été"
+		
+			
+		},
+		{
+			"GammeID": 3,
+			"designation": "gamme 3",
+		
+			"timeTotlal": "10",
+			"FamilyID": "Famille 2",
+			"SubFamilyID":"Sous Famille 4",
+			"operationTotal":2,
+			"season":"été",
+			"createdAt": "11/01/2023"
+		
+			
+		}
+		
+	]
+}
+

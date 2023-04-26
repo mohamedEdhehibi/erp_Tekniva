@@ -1,0 +1,241 @@
+<div class="col-12">
+    <app-menu-chaine></app-menu-chaine>
+</div>
+
+
+      <div class="col-12">
+        <div class="card px-6 py-6">
+            <div class="col-12">
+                <div class="my-2">
+                    <h1 style="text-align: left; font-family:Georgia, 'Times New Roman', Times, serif;">Liste de chaînes
+                    </h1>
+                </div>
+            </div>
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Ajouter" icon="pi pi-plus" class="p-button-success mr-2"
+                            (click)="openNew()"></button>
+                        <button pButton pRipple label="Supprimer" icon="pi pi-trash" class="p-button-danger"
+                            (click)="deleteSelectedchaines()"
+                            [disabled]="!selectedchaines || !selectedchaines.length"></button>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import"
+                        chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"
+                        (click)="dt.exportCSV()"></button>
+                </ng-template>
+
+
+            </p-toolbar>
+            <p-table #dt [value]="chaines|filter:filtered" [columns]="cols" responsiveLayout="scroll" [rows]="10"
+                [globalFilterFields]="['name','country.name','representative.name','status']" [rows]="10"
+                [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [(selection)]="selectedchaines" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h3 class="m-0"></h3>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" [(ngModel)]="filtered" placeholder="Recherche..."
+                                class="w-full sm:w-auto" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem" scope="col">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+
+                        <th pSortableColumn="code" scope="col">Code <p-sortIcon field="code"></p-sortIcon></th>
+                        <th pSortableColumn="name" scope="col">designation<p-sortIcon field="name"></p-sortIcon></th>
+
+                        <th pSortableColumn="category" scope="col">Groupe chaine <p-sortIcon
+                                field="category"></p-sortIcon></th>
+                        <th pSortableColumn="rating" scope="col"> rendenment<p-sortIcon field="rating"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="inventoryStatus" scope="col">qualite <p-sortIcon
+                                field="inventoryStatus"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="inventoryStatus" scope="col">Disponibilite <p-sortIcon
+                                field="inventoryStatus"></p-sortIcon></th>
+
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-chaine>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="chaine"></p-tableCheckbox>
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
+                            {{chaine.code }}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Designation</span>
+                            {{chaine.designation}}
+                        </td>
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">groupe chaine</span>
+                            {{chaine.groupeChaine.name}}
+                        </td>
+                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Objectif rendenment</span>
+                            {{chaine.performanceGoal}}
+                        </td>
+                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">objectif qualite</span>
+                            {{chaine.qualityGoal}}
+                        </td>
+                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Date disponibilite</span>
+                            <span>{{chaine.availabilityDate |date:'shortDate'}}</span>
+                        </td>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-success mr-2"
+                                    (click)="editchaine(chaine.id)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                    (click)="deletechaine(chaine.id)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="chaineDialog" [style]="{width: '450px'}" header="chaine Details" [modal]="true"
+            class="p-fluid">
+            <ng-template pTemplate="content">
+
+                <div class="field">
+                    <label for="name">designation *</label>
+                    <input type="text" id="name" pInputText [(ngModel)]="chaine.designation" required
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !chaine.designation}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !chaine.designation">Le nom est
+                        obligatoire.</small>
+                </div>
+                <div class="field">
+                    <label for="code">code *</label>
+
+                    <input type="number" id="description" pInputText [(ngModel)]="chaine.code"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !chaine.code}">
+
+
+                </div>
+                <div class="field ">
+                    <label for="quantity">code a barre *</label>
+                    <input type="text" id="description" pInputText [(ngModel)]="chaine.barCode"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !chaine.barCode}">
+
+
+
+                </div>
+                <div class="field ">
+                    <label for="quantity">type *</label>
+                    <input type="text" id="description" pInputText [(ngModel)]="chaine.type"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !chaine.type}">
+                </div>
+                <div class="field">
+                    <label>Machine *</label>
+
+                    <p-multiSelect [options]="machines" [(ngModel)]="chaine.chaine_machine" optionValue="id"
+                        optionLabel="code"></p-multiSelect>
+                </div>
+                <div class="field">
+                    <label>Empoilyés *</label>
+
+                    <p-multiSelect [options]="emploiyes" [(ngModel)]="chaine.employee_chaine" optionValue="id"
+                        optionLabel="firstName"></p-multiSelect>
+                </div>
+                <div class="field">
+                    <label>Date de disponibilité *</label>
+
+                    <p-calendar [(ngModel)]="chaine.availabilityDate" [showIcon]="true"></p-calendar>
+                </div>
+
+
+                <div class="field">
+                    <label for="description">groupe de chaine *</label>
+                    <p-dropdown [(ngModel)]="chaine.groupeChaine" optionValue="value" [options]="groupe"
+                        placeholder="Select">
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="field">
+                    <label for="description">post clé *</label>
+                    <p-dropdown [(ngModel)]="chaine.posteCle" optionValue="value" [options]="poste"
+                        placeholder="Select">
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="field">
+                    <label for="description">Atelier</label>
+                    <p-dropdown [(ngModel)]="chaine.workshop" optionValue="value" [options]="atelier"
+                        placeholder="Select">
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+
+
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="price">objectif qualite *</label>
+
+
+                        <input type="text" id="description" pInputText [(ngModel)]="chaine.qualityGoal"
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !chaine.qualityGoal}">
+
+                    </div>
+                    <div class="field col">
+                        <label for="quantity">objectif_rendenment *</label>
+                        <input type="text" id="description" pInputText [(ngModel)]="chaine.performanceGoal"
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !chaine.performanceGoal}">
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text"
+                    (click)="hideDialog()"></button>
+                <button pButton pRipple label="enregistré" icon="pi pi-check" class="p-button-text"
+                    (click)="savechaine()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deletechaineDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="chaine">Etes-vous sûr que vous voulez supprimer?<b>{{chaine.designation}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non"
+                    (click)="deletechaineDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui"
+                    (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deletechainesDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Voulez-vous vraiment supprimer les chaînes sélectionnés ?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non"
+                    (click)="deletechainesDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui"
+                    (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>

@@ -1,0 +1,473 @@
+<div class="card">
+    <p-toast></p-toast>
+<!-- Complexity Part -->
+    <p-tabView>
+        <p-tabPanel header="Complexité ">
+            <div class="text-800 font-bold text-3xl mb-3 mt-2"> Complexité</div>
+            <br>
+            <div >
+                <div class="grid formgrid p-fluid">
+                    <div class=" field col-12 md:col-7 ">
+                        <label for="nickname" class="font-medium text-900">Des.</label>
+                        <input id="nickname" type="text" pInputText [(ngModel)]="complexity.designation">
+                    </div>
+                </div>
+                <div class="grid formgrid p-fluid">
+                    <div class=" field col-12 md:col-7 ">
+                        <label for="nickname" class="font-medium text-900">Taux</label>
+                        <input id="nickname" type="number" pInputText [(ngModel)]="complexity.taux">
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <div>
+                        <button pButton pRipple label="{{msg}}" (click)="SubmitComplexity()"  class="p-button-success  w-auto mt-3"></button>
+                    </div>
+                    <div>
+                        <button pButton pRipple label="Voir Liste"   (click)="show=!show" class="w-auto mt-3"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="show">
+                <p-table [value]="allComplexity" [tableStyle]="{ 'min-width': '10rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 5cm!important;">Code</th>
+                            <th style="width: 5cm!important;">Complexité</th>
+                            <th>Actions</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-cpt>
+                        <tr>
+                            <td>{{ cpt.designation }}</td>
+                            <td>{{ cpt.taux }}</td>
+                            <td>
+                                <div class="flex">
+                                    <button pButton pRipple icon="pi pi-pencil"
+                                      (click)="editComplexity(cpt)"  class="p-button-rounded p-button-success mr-2"></button>
+                                    <button pButton pRipple icon="pi pi-trash"
+                                    (click)="DeleteComplexity(cpt.id)"   class="p-button-rounded p-button-warning"></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-tabPanel>
+<!-- End Complexity -->
+
+        <p-tabPanel header="Couleur" >
+            <div class="text-900 font-bold text-3xl mb-4 mt-2"> Couleur</div>
+
+            <div >
+                <div class="grid formgrid p-fluid">
+                    <div class="field col-12 md:col-7 ">
+                        <label for="nickname" class="font-medium text-900">Code</label>
+                        <input id="nickname" type="text" pInputText [(ngModel)]="color.code">
+                    </div>
+
+                </div>
+
+                <div class="grid formgrid p-fluid">
+                    <div class="field col-12 md:col-7">
+                        <label for="nickname" class="font-medium text-900">Dés.</label>
+                        <input id="nickname" type="text" pInputText [(ngModel)]="color.designation">
+                    </div>
+
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <div>
+                        <button pButton pRipple label={{msg}} class="p-button-success  w-auto mt-3" (click)="Submit()"></button>
+                    </div>
+                    <div>
+                        <button pButton pRipple label="Voir Liste" (click)="show=!show" class="w-auto mt-3"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="show">
+                <p-table [value]="allColor" [tableStyle]="{ 'min-width': '10rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 5cm!important;">Code</th>
+                            <th style="width: 5cm!important;">Dés.</th>
+                            <th>Actions</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-color>
+                        <tr>
+                            <td>{{ color.code }}</td>
+                            <td>{{ color.designation }}</td>
+                            <td>
+                                <div class="flex">
+                                    <button pButton pRipple icon="pi pi-pencil"
+                                       (click)="editColor(color)" class="p-button-rounded p-button-success mr-2"></button>
+                                    <button pButton pRipple icon="pi pi-trash"
+                                      (click)="DeleteColor(color.id)"  class="p-button-rounded p-button-warning"></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-tabPanel>
+
+ <!-- size Chart Part  -->
+        <p-tabPanel header="Grille des tailles">
+            <div class="text-900 font-bold text-3xl mb-4 mt-2"> Grille des tailles</div>
+            <div >
+                <div class="grid formgrid p-fluid">
+                    <div class="field col-12 md:col-7">
+                        <label for="nickname" class="font-medium text-900">Code</label>
+                        <input id="nickname" type="text" pInputText [(ngModel)]="SizeChart.code">
+                    </div>
+
+                </div>
+                <div class="grid formgrid p-fluid">
+                    <div class="field col-12 md:col-7">
+                        <label for="nickname" class="font-medium text-900">Dés.</label>
+                        <input id="nickname" type="text" pInputText [(ngModel)]="SizeChart.designation">
+                    </div>
+
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <div>
+                        <button pButton pRipple label="{{msg}}" class="p-button-success  w-auto mt-3" (click)="SubmitSizeChart()"></button>
+                    </div>
+                    <div>
+                        <button pButton pRipple label="Voir Liste" (click)="show=!show"  class="w-auto mt-3"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="show">
+                <p-table [value]="allSizeChart" [tableStyle]="{ 'min-width': '10rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 5cm!important;">Code</th>
+                            <th style="width: 5cm!important;">Grille de Taille</th>
+                            <th>Actions</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-SizeChart>
+                        <tr>
+                            <td>{{ SizeChart.code }}</td>
+                            <td>{{ SizeChart.designation }}</td>
+                            <td>
+                                <div class="flex">
+                                    <button pButton pRipple icon="pi pi-pencil"
+                                      (click)="editSizeChart(SizeChart)"  class="p-button-rounded p-button-success mr-2"></button>
+                                    <button pButton pRipple icon="pi pi-trash"
+                                       (click)="DeleteSizeChart(SizeChart.id)" class="p-button-rounded p-button-warning"></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-tabPanel>
+<!-- end size Chart part  -->
+
+     <!-- Size Part -->
+        <p-tabPanel header="Tailles">
+            <div class="text-900 font-bold text-3xl mb-4 mt-2"> Tailles</div>
+            <div >
+                <div class="grid formgrid p-fluid">
+                    <div class=" field col-12 md:col-7 ">
+                        <label for="nickname" class="font-medium text-900">Dés.</label>
+                        <input id="nickname" type="text" pInputText [(ngModel)]="Size.designation">
+                    </div>
+
+                </div>
+                <div class="grid formgrid p-fluid">
+                    <div class=" field col-12 md:col-7 ">
+                        <label for="nickname" class="font-medium text-900">taille</label>
+                        <input id="nickname" type="text" pInputText [(ngModel)]="Size.size_order">
+                    </div>
+
+                </div>
+                
+                
+                <div class="grid formgrid p-fluid">
+                    <div class=" field col-12 md:col-7 ">
+                        <label label for="nickname" class="font-medium text-900">Grille des tailles</label>
+                        <br>
+                        <p-dropdown [(ngModel)]="Size.sizeChart" optionValue="id" optionLabel="code" [editable]="false"
+                        [options]="allSizeChart" [required]="true">
+                            <!-- <ng-template  pTemplate="selectedItem" >
+                                <span 
+                                    [class]="'chaine-badge status-' + Size.sizeChart">aaa</span>
+                             
+                            </ng-template> -->
+                            <ng-template let-options pTemplate="selectedItem" >
+                                <span 
+                                    [class]="'chaine-badge status-' + Size.sizeChart">{{options.code}}</span>
+                                
+                            </ng-template>
+                           
+                        </p-dropdown>
+                        <!-- <div>{{getSizeById(Size.sizeChart)}}</div>-->
+                    </div> 
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <div>
+                        <button pButton pRipple label="{{msg}}" class="p-button-success  w-auto mt-3" (click)="SubmitSize()" ></button>
+                    </div>
+                    <div>
+                        <button pButton pRipple label="Voir Liste" (click)="show=!show" class="w-auto mt-3"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="show">
+                <p-table [value]="allSize" [tableStyle]="{ 'min-width': '10rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 5cm!important;">Designation</th>
+                            <th style="width: 5cm!important;">Grille Taille</th>
+                            <th style="width: 5cm!important;"> Taille</th>
+                            <th>Actions</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-size>
+                        <tr>
+                            <td>{{ size.designation }}</td>
+                            <td>{{ size.sizeChart?.designation }}</td>
+                            <td>{{ size.size_order }}</td>
+                            <td>
+                                <div class="flex">
+                                    <button pButton pRipple icon="pi pi-pencil"
+                                       (click)="editSize(size)" class="p-button-rounded p-button-success mr-2"></button>
+                                    <button pButton pRipple icon="pi pi-trash"
+                                       (click)="DeleteSize(size.id)" class="p-button-rounded p-button-warning"></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-tabPanel>
+        <!-- End Size Part -->
+
+        <!-- season Part  -->
+        <p-tabPanel header="Saison">
+            <div class="text-900 font-bold text-3xl mb-4 mt-2"> Saison</div>
+
+            <div >
+
+                <div class="grid formgrid p-fluid">
+                    <div class=" field col-12 md:col-7 ">
+                        <label for="nickname" class="font-medium text-900">Code</label>
+                        <input id="nickname" type="text" pInputText [(ngModel)]="Season.code">
+                    </div>
+                </div>
+                <div class="grid formgrid p-fluid">
+                    <div class=" field col-12 md:col-7 ">
+                        <label for="nickname" class="font-medium text-900">Dés.</label>
+                        <input id="nickname" type="text" pInputText [(ngModel)]="Season.designation">
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <div>
+                        <button pButton pRipple label="{{msg}}" (click)="SubmitSeason()" class="p-button-success  w-auto mt-3"></button>
+                    </div>
+                    <div>
+                        <button pButton pRipple label="Voir Liste" (click)="show=!show" class="w-auto mt-3"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="show">
+                <p-table [value]="allSeason" [tableStyle]="{ 'min-width': '10rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 5cm!important;">Code</th>
+                            <th style="width: 5cm!important;">Saison</th>
+                            <th>Actions</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-season>
+                        <tr>
+                            <td>{{ season.code }}</td>
+                            <td>{{ season.designation }}</td>
+                            <td>
+                                <div class="flex">
+                                    <button pButton pRipple icon="pi pi-pencil"
+                                      (click)="editSeason(season)"  class="p-button-rounded p-button-success mr-2"></button>
+                                    <button pButton pRipple icon="pi pi-trash"
+                                       (click)="DeleteSeason(season.id)" class="p-button-rounded p-button-warning"></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-tabPanel>
+        <!-- End season -->
+
+        <!-- Brand Part -->
+        <p-tabPanel header="Marque">
+            <div class="text-900 font-bold text-3xl mb-4 mt-2"> Marque</div>
+
+            <div >
+                <div class="grid formgrid p-fluid">
+                    <div class=" field col-12 md:col-7 ">
+                        <label for="nickname" class="font-medium text-900">Code</label>
+                        <input id="nickname" type="text" pInputText [(ngModel)]="brand.code">
+                    </div>
+
+                </div>
+                <div class="grid formgrid p-fluid">
+                    <div class=" field col-12 md:col-7 ">
+                        <label for="nickname" class="font-medium text-900">Dés.</label>
+                        <input id="nickname" type="text" pInputText [(ngModel)]="brand.designation">
+                    </div>
+
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <div>
+                        <button pButton pRipple label="{{msg}}" (click)="SubmitBrand()" class="p-button-success  w-auto mt-3"></button>
+                    </div>
+                    <div>
+                        <button pButton pRipple label="Voir Liste" (click)="show=!show" class="w-auto mt-3"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="show">
+                <p-table [value]="allBrands" [tableStyle]="{ 'min-width': '10rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 5cm!important;">Code</th>
+                            <th style="width: 5cm!important;">Marque</th>
+                            <th>Actions</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-brand>
+                        <tr>
+                            <td>{{ brand.code }}</td>
+                            <td>{{ brand.designation }}</td>
+                            <td>
+                                <div class="flex">
+                                    <button pButton pRipple icon="pi pi-pencil"
+                                       (click)="editBrand(brand)" class="p-button-rounded p-button-success mr-2"></button>
+                                    <button pButton pRipple icon="pi pi-trash"
+                                       (click)="DeleteBrand(brand.id)" class="p-button-rounded p-button-warning"></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-tabPanel>
+        <!-- End Brand -->
+
+        <!-- Tva -->
+        <p-tabPanel header="TVA">
+            <div class="text-900 font-bold text-3xl mb-4 mt-2"> TVA</div>
+
+            <div >
+                <div class="grid formgrid p-fluid">
+                    <div class=" field col-12 md:col-7 ">
+                        <label for="nickname" class="font-medium text-900">Des.</label>
+                        <input id="nickname" type="text" pInputText [(ngModel)]="Tva.designation">
+                    </div>
+
+                </div>
+                <div class="grid formgrid p-fluid">
+                    <div class=" field col-12 md:col-7 ">
+                        <label for="nickname" class="font-medium text-900">code</label>
+                        <input id="nickname" type="number" pInputText [(ngModel)]="Tva.taux">
+                    </div>
+
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <div>
+                        <button pButton pRipple label="{{msg}}" (click)="SubmitTva()"  class="p-button-success  w-auto mt-3"></button>
+                    </div>
+                    <div>
+                        <button pButton pRipple label="Voir Liste" (click)="show=!show" class="w-auto mt-3"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="show">
+                <p-table [value]="allTva" [tableStyle]="{ 'min-width': '10rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 5cm!important;">Code</th>
+                            <th style="width: 5cm!important;">TVA</th>
+                            <th>Actions</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-tva>
+                        <tr>
+                            <td>{{ tva.taux }}</td>
+                            <td>{{ tva.designation }}</td>
+                            <td>
+                                <div class="flex">
+                                    <button pButton pRipple icon="pi pi-pencil"
+                                     (click)="editTva(tva)"   class="p-button-rounded p-button-success mr-2"></button>
+                                    <button pButton pRipple icon="pi pi-trash"
+                                    (click)="DeleteTva(tva.id)"  class="p-button-rounded p-button-warning"></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-tabPanel>
+        <!-- End TVA -->
+
+        <!-- Discount Part -->
+        <p-tabPanel header="Remises">
+            <div class="text-900 font-bold text-3xl mb-4 mt-2"> Remises</div>
+
+            <div >
+                <div class="grid formgrid p-fluid">
+                    <div class=" field col-12 md:col-7 ">
+                        <label for="nickname" class="font-medium text-900">Des.</label>
+                        <input id="nickname" type="text" pInputText [(ngModel)]="discount.designation">
+                    </div>
+                    
+
+                </div>
+                <div class="grid formgrid p-fluid">
+                    <div class=" field col-12 md:col-7 ">
+                        <label for="nickname" class="font-medium text-900">Taux %</label>
+                        <input id="nickname" type="number" pInputText [(ngModel)]="discount.taux">
+                    </div>
+                    
+
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <div>
+                        <button pButton pRipple label="{{msg}}" (click)="SubmitDiscount()" class="p-button-success  w-auto mt-3"></button>
+                    </div>
+                    <div>
+                        <button pButton pRipple label="Voir Liste" (click)="show=!show" class="w-auto mt-3"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="show">
+                <p-table [value]="allDiscount" [tableStyle]="{ 'min-width': '10rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 5cm!important;">Des.</th>
+                            <th style="width: 5cm!important;">Remise</th>
+                            <th>Actions</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-disc>
+                        <tr>
+                            <td>{{ disc.designation }}</td>
+                            <td>{{ disc.taux }}</td>
+                            <td>
+                                <div class="flex">
+                                    <button pButton pRipple icon="pi pi-pencil"
+                                      (click)="editDiscount(disc)"  class="p-button-rounded p-button-success mr-2"></button>
+                                    <button pButton pRipple icon="pi pi-trash"
+                                    (click)="DeleteDiscount(disc.id)"  class="p-button-rounded p-button-warning"></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-tabPanel>
+        <!-- End Discount -->
+    </p-tabView>
+</div>

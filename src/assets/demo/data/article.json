@@ -1,0 +1,37 @@
+{
+    "data": [
+        {
+            "id": "1",
+            "designation": "T-shirt ZARA",
+            "reference": "dfj789",
+            "subFamilyArticleId": "sous-famille1",
+            "familyArticle": "famille1",
+            "code": "NGE145",
+            "client": "SOTIFAB ",
+            "marque": "AZERT",
+            "gamme":"Gamme1",
+            "temps": "15",
+            "type": "1" 
+        },
+        {
+            "id": "2",
+            "designation": "shirt BERSHKA",
+            "reference": "dfj789",
+            "subFamilyArticleId": "sous-famille1",
+            "familyArticle": "famille1",
+            "code": "BER145",
+            "client": "BERSHKA ",
+            "marque": "AZFVB",
+            "gamme":"Gamme2",
+            "temps": "25",
+            "type": "3" 
+        }
+    ]
+}
+
+
+
+
+
+
+

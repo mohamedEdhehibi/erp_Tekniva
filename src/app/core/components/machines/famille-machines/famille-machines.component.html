@@ -1,0 +1,158 @@
+<h1  style="text-align: center; font-family:Georgia, 'Times New Roman', Times, serif;">Gestion des Machines</h1>
+ <div>
+                <h5>Menu</h5>
+                <p-breadcrumb [model]="breadcrumbItems" [home]="{icon: 'pi pi-home'}"></p-breadcrumb>
+            </div>
+        <br>    
+<div class="grid">
+    
+    <div class="col-12">
+        <div class="card px-6 py-6">
+           
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Ajouter" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Supprimer" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedMachine()" [disabled]="!selectedMachines || !selectedMachines.length"></button>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="machines|filter:filtered" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedMachines" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0"> Liste des machines</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" [(ngModel)]="filtered"  placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox (click)="findIndexById(machine)"></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon></th>
+                        <th pSortableColumn="name">Désignation<p-sortIcon field="name"></p-sortIcon></th>
+                       
+                        <th pSortableColumn="rating">  Créer Par<p-sortIcon field="rating"></p-sortIcon></th>
+                        <!-- <th pSortableColumn="category"> status <p-sortIcon field="category"></p-sortIcon></th> -->
+                       
+                        <th>Action</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-machine>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="machine" (click)="findIndexById(machine.id)"></p-tableCheckbox>
+                        </td>
+                        <td style="width:14%; min-width:20rem;"><span class="p-column-title">Code</span>
+                            {{machine.code }}
+                        </td>
+                        <td style="width:14%; min-width:20rem;">
+                            <span class="p-column-title">Designation</span>
+                            {{machine.designation}}
+                        </td>
+                        <!-- <td style="width:14%; min-width:10rem;">
+                        <span class="p-column-title">code a barre</span>
+                    
+                            {{chaine.code_a_barre}}
+                        </td> -->
+                        <!-- <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">Etat</span>
+                            {{chaine.state}}
+                        </td> -->
+                        
+                        <td style="width:14%; min-width: 20rem;"><span class="p-column-title">Créer Par</span>
+                            {{machine.createdAt| date }}
+                        </td>
+                        <!-- <td style="width:14%; min-width: 15rem;"><span class="p-column-title">Status</span>
+                            {{machine.isActive}}
+                        </td> -->
+                        
+                        <!-- <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Fournisseur</span>
+                            <span [class]="'chaine-badge status-' + (machine.supplier ? machine.supplier.toLowerCase() : '')">{{machine.supplier}}</span>
+                        </td> -->
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editMachine(machine)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteMachine(machine)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="machineDialog" [style]="{width: '450px'}" header="famille Details" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <!-- <img [src]="'assets/demo/images/chaine/' + chaine.image" [alt]="chaine.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="chaine.image"> -->
+                <div class="field">
+                    <label for="name">Designation*</label>
+                    <input type="text"  id="name" pInputText [(ngModel)]="machine.designation" required  [ngClass]="{'ng-invalid ng-dirty' : submitted && !machine.designation}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !machine.designation">La Designation est obligatoire.</small>
+                </div>
+                <div class="field">
+                    <label for="code">Code*</label>
+                    <input type="text" id="description" pInputText [(ngModel)]="machine.code"  [ngClass]="{'ng-invalid ng-dirty' : submitted && !machine.designation}">
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !machine.code">Le code est obligatoire.</small>
+                </div>
+                <!-- <div *ngIf="edit" class="field">
+                    <label for="description">status</label>
+                    <div class="formgrid grid">
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton id="status1" name="status" value="true" [(ngModel)]="machine.isActive"></p-radioButton>
+                            <label for="status1">Active</label>
+                        </div>
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton id="status2" name="status" value="false" [(ngModel)]="machine.isActive"></p-radioButton>
+                            <label for="status2">inactive</label>
+                        </div>
+                        
+                    </div>
+                </div> -->
+
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="enregistré" icon="pi pi-check" class="p-button-text" (click)="saveMachine()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteMachineDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="machine">Etes-vous sûr que vous voulez supprimer?<b>{{machine.designation}}</b></span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" ></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text"  (click)="confirmDeleteF()" label="Oui" ></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteMachinesDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Voulez-vous vraiment supprimer les chaînes sélectionnés ?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" (click)="deleteMachineDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)=" confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>
+
+
+
+
+
+

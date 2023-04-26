@@ -1,0 +1,41 @@
+{
+	"data": [
+		{
+			"id":"1001",
+			"designation": "nbm5mv45n",			
+			"code": 154,
+			"groupe_chaine":"groupe A",
+			"etat":"bien",
+			"objectif_rendenment":60,
+			"quantity": 52,
+			"rating": 3,
+			"code_a_barre":"D212144",
+			"date_disponibilite":"12/04/2023"
+		},
+		{
+			"id":"1001",
+			"designation": "nbm5mv45n",			
+			"code": 154,
+			"groupe_chaine":"groupe A",
+			"etat":"bien",
+			"objectif_rendenment":60,
+			"objectif_qualite":70,
+			"code_a_barre":"D212144",
+			"date_disponibilite":"10/04/2023",
+			"rating": 4
+		},
+		{
+			"id":"1001",
+			"designation": "nbm5mv45n",			
+			"code": 154,
+			"groupe_chaine":"groupe A",
+			"etat":"bien",
+			"objectif_rendenment":60,
+			"objectif_qualite":70,
+			"code_a_barre":"D212144",
+			"date_disponibilite":"15/04/2023",
+			"rating": 6
+		}
+		
+	]
+}

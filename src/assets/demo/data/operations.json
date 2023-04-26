@@ -1,0 +1,50 @@
+{
+	"data": [
+		{
+			"OperationID": 1,
+			"designation": "surfacage",
+			"code": "5265465",
+			"temps": "120",
+			"FamilyID": "Famille 1",
+			"type": "avec paquet",
+			"equipmentID": "Equipement 1",
+			"productElementID": "Elément produit 1",
+			"machineID": "Machine 1",
+			"departement":"Magasin",
+			"createdAt": "11/01/2023"
+		
+			
+		},
+		{
+			"OperationID": 2,
+			"designation": "fraisage",
+			"code": "5265465",
+			"temps": "120",
+			"FamilyID": "Famille 1",
+			"type": "sans paquet",
+			"equipmentID": "Equipement 2",
+			"productElementID": "Elément produit 2",
+			"machineID": "Machine 2",
+			"createdAt": "11/01/2023",
+			"departement":"Production"
+			
+		},
+		{
+			"OperationID": 3,
+			"designation": "tournage",
+			"code": "5265465",
+			"temps": "120",
+			"FamilyID": "Famille 1",
+			"type": "avec paquet",
+			"equipmentID": "Equipement 1",
+			"productElementID": "Elément produit 3",
+			"machineID": "Machine 2",
+			"createdAt": "11/01/2023",
+			"departement":"Marketing"
+		
+			
+		}
+		
+	]
+}
+

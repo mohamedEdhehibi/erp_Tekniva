@@ -1,0 +1,25 @@
+{
+"data": [
+    {
+    
+    "idTraining": "123",
+    "training": "technique de communication",
+    "date": "30/03/2023"
+  },
+  
+
+    {
+     
+        "idTraining": "456",
+        "training": "management",
+        "date": "01/04/2023"
+    },
+    {
+       
+        "idTraining": "789",
+        "training": "5s",
+        "date": "10/04/2023"
+    }
+]
+
+}

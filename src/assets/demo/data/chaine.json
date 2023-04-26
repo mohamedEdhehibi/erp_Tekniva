@@ -1,0 +1,24 @@
+{
+	"data": [
+		{
+            "idChain":"D1251",
+            "codechain": "S56",
+            "designation": "chaine coupage",
+            "id_Group_chain":4545,
+            "barCode": "df6565s",
+            "state":true,
+            "type":"coup",
+            "qualityGoal":50,
+            "performanceGoal":60,
+            "availabilityDate":"12/04/2023",
+            "id_workshop":4154,
+            "isActive":"active",
+            "createAt":"11/05/2023",
+            "updateAt":"12/04/2023",
+            "postCleld":5656
+        }
+		
+    
+		
+	]
+}

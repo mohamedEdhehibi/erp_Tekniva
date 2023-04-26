@@ -1,0 +1,72 @@
+<p-toast></p-toast>
+<div class="card">
+    <span class="text-900 text-xl font-bold mb-4 block">Créer un compte d'utilisateur</span>
+    <div class="grid">
+        <!-- <div class="col-12 lg:col-2">
+            <div class="text-900 font-medium text-xl mb-3">Profile</div>
+            <p class="m-0 p-0 text-600 line-height-3 mr-3">Odio euismod lacinia at quis risus sed vulputate odio.</p>
+        </div> -->
+        <div class="col-12 lg:col-10">
+            <div class="grid formgrid p-fluid">
+                <div class="field mb-4 col-12 md:col-6">
+                    <span class="p-input-icon-left w-full">
+                        <i class="pi pi-user"></i>
+                        <input id="username" type="text" pInputText class="w-full md:w-25rem"  [(ngModel)]="user.login" placeholder="Identifiant">
+                    </span>
+                </div>
+                <!-- <div class="field mb-4 col-12">
+                    <label for="avatar" class="font-medium text-900">Avatar</label>
+                    <p-fileUpload mode="basic" name="avatar" url="./upload.php" accept="image/*" [maxFileSize]="1000000" styleClass="p-button-outlined p-button-plain" chooseLabel="Upload Image"></p-fileUpload>
+                </div>
+                <div class="field mb-4 col-12">
+                    <label for="bio" class="font-medium text-900">Bio</label>
+                    <textarea id="bio" type="text" pInputTextarea rows="5" [autoResize]="true"></textarea>
+                </div> -->
+                <div class="field mb-4 col-12 md:col-6">
+                    <span class="p-input-icon-left w-full">
+                        <i class="pi pi-envelope"></i>
+                        <input id="email" type="text" pInputText class="w-full md:w-25rem"  [(ngModel)]="user.email" placeholder="E-mail">
+                    </span>
+                </div>
+                <div class="field mb-4 col-12 md:col-6">
+                    <span class="p-input-icon-left w-full">
+                        <i class="pi pi-lock"></i>
+                        <input id="password" type="password" pInputText class="w-full md:w-25rem"  [(ngModel)]="user.password" placeholder="Mot de Passe">
+                    </span>
+                </div>
+                <!-- <div class="field mb-4 col-12 md:col-6">
+                    <label for="country" class="font-medium text-900">Country</label>
+                    <p-dropdown inputId="country" [options]="countries" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select a Country">
+                        <ng-template let-country pTemplate="item">
+                            <div class="flex align-items-center">
+                                <img src="assets/demo/images/flag/flag_placeholder.png" [class]="'mr-2 flag flag-' + country.code.toLowerCase()" style="width:18px"/>
+                                <div>{{country.name}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div> -->
+                <!-- <div class="field mb-4 col-12 md:col-6">
+                    <span class="p-input-icon-left w-full">
+                        <i class="pi pi-lock"></i>
+                        <input id="password" type="password" pInputText class="w-full md:w-25rem"  [(ngModel)]="user.password" placeholder="Mot de Passe">
+                    </span>
+                </div>
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="state" class="font-medium text-900">State</label>
+                    <input id="state" type="text" pInputText>
+                </div>
+                <div class="field mb-4 col-12">
+                    <label for="website" class="font-medium text-900">Website</label>
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon">www</span>
+                        <input id="website" type="text" pInputText>      
+                    </div>
+                </div> -->
+                <div class="col-12">
+                    <button pButton pRipple label="Créer" class="w-auto mt-3" (click)=" addUser()"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

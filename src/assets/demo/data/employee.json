@@ -1,0 +1,57 @@
+{
+  "data":[{
+    "id":"gfhjgkg",
+    "matricule": "C52411",
+  "last_name": "abdelkader",
+  "first_name": "khalil",
+  "birth_day": "25/12/1991",
+  "hiring_date": "Thu Mar 16 2023 11:56:16 GMT+0100 (UTC+01:00)",
+  "genre": "feminin",
+  "phone": "398498488",
+  "email": "jallouliasma@gmail.com",
+  "address": "sahloul sousse",
+  "contract": "cdd",
+  "photo": "QHD.jpg",
+  "allure": 4,
+  "salary": 1200,
+  "salary_type": "mentiel",
+  "child_number": 2,
+  "civil_state": "marriée",
+  "cin": 9238479984,
+  "cnss": 9283749347,
+  "passport": "873287786",
+  "bank": "ALBARAKA",
+  "rib": 948798749839,
+  "status": "active",
+  "presense_ojective": "kjdhku"
+
+},
+{
+  "id":"gfhjgkg",
+  "matricule": "A21548",
+"last_name": "ben ali",
+"first_name": "imen",
+"birth_day": "25/12/1991",
+"hiring_date": "Thu Mar 16 2021 11:56:16 GMT+0100 (UTC+01:00)",
+"genre": "feminin",
+"phone": "398498488",
+"email": "jallouliasma@gmail.com",
+"address": "sahloul sousse",
+"contract": "cdd",
+"photo": "QHD.jpg",
+"allure": 4,
+"salary": 1200,
+"salary_type": "mentiel",
+"child_number": 2,
+"civil_state": "marriée",
+"cin": 9238479984,
+"cnss": 9283749347,
+"passport": "873287786",
+"bank": "ALBARAKA",
+"rib": 948798749839,
+"status": "active",
+"presense_ojective": "kjdhku"
+
+}
+
+]}

@@ -1,0 +1,212 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Ajouter" icon="pi pi-plus" class="p-button-success mr-2"
+                            (click)="gmenNew()"></button>
+                        <button pButton pRipple label="Supprimer" icon="pi pi-trash" class="p-button-danger"
+                            (click)="deleteSelectedGammes()"
+                            [disabled]="!selectedGamme|| !selectedGamme.length"></button>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import"
+                        chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"
+                        (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="Gammes|filter:filtered"  responsiveLayout="scroll" [rows]="10"
+                
+                [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                 [(selection)]="selectedGamme" >
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Liste des Gammes</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" [(ngModel)]="filtered" placeholder="Search..."
+                                class="w-full sm:w-auto" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="designation">Désignation <p-sortIcon field="designation"></p-sortIcon></th>
+    
+                        <th pSortableColumn="createdBy">Famille <p-sortIcon field="createdBy"></p-sortIcon></th>
+                        <th pSortableColumn="createdBy">Sous-Famille <p-sortIcon field="Localité"></p-sortIcon></th>
+                        <th pSortableColumn="createdBy" style="text-align: center;">Nb Opé <p-sortIcon field="Localité"></p-sortIcon></th>
+                        <th pSortableColumn="createdBy" style="text-align: center;">Prod/h <p-sortIcon field="Localité"></p-sortIcon></th>
+                        <th pSortableColumn="createdBy">
+                            <div style="display: flex; flex-direction: column;text-align: center;">
+                                Temps
+                                <div style="display: flex; justify-content:space-around;">
+                                    <span>CMN</span>
+                                    <span>S</span>
+                                    <span>Mn</span>
+                                </div>
+                            </div>
+
+                        </th>
+                
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-gme>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="gme"></p-tableCheckbox>
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Rôle</span>
+                            {{gme.designation}}
+                        </td>
+                    
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Créé Par</span>
+                            {{gme.FamilyID}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Localité</span>
+                            {{gme.SubFamilyID}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;text-align: center;">
+                            <span class="p-column-title">Localité</span>
+                            {{gme.operationTotal}}
+                        </td>
+                   
+                        <td style="width:14%; min-width:10rem;text-align: center;">
+                            <span class="p-column-title">Localité</span>
+                            {{gme.timeTotlal}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;" >
+                        <tr style="display: flex; justify-content:space-around;">
+                            <td>
+                            <span>{{gme.ms}}</span>
+                        </td>
+                        <td>
+                            <span>{{gme.s}}</span>
+                        </td>
+                        <td>
+                            <span>{{gme.timeTotlal}}</span>
+                        </td>
+                    </tr>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-success mr-2" (click)="editGamme(gme)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                    (click)="deleteGamme(gme)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+        </div>
+
+        <p-dialog [(visible)]="GammeDialog" [style]="{width: '450px'}" header="Nouvelle Gamme" [modal]="true"
+            class="p-fluid">
+            <ng-template pTemplate="content">
+
+                <div class="field">
+                    <label for="name">Nom de Gamme</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="gme.designation" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !gme.designation}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !gme.designation">Name is required.</small>
+                </div>
+             
+                <div class="field">
+                    <label for="description">Famille</label>
+
+                    <p-dropdown [(ngModel)]="gme.FamilyID" optionValue="label" [options]="family" placeholder="Select">
+                        <ng-template pTemplate="selectedItem">
+                            <span *ngIf="gme && gme.FamilyID"
+                                [class]="'chaine-badge status-' + gme.FamilyID.toString().toLowerCase()">{{gme.FamilyID}}</span>
+                        </ng-template>
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+
+                </div>
+                <div class="field">
+                    <label for="description">Sous-Famille</label>
+
+                    <p-dropdown [(ngModel)]="gme.FamilyID" optionValue="label" [options]="family" placeholder="Select">
+                        <ng-template pTemplate="selectedItem">
+                            <span *ngIf="gme && gme.FamilyID"
+                                [class]="'chaine-badge status-' + gme.FamilyID.toString().toLowerCase()">{{gme.FamilyID}}</span>
+                        </ng-template>
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+
+                </div>
+
+                <div class="field">
+                    <label for="description">Nombre d'Opération</label>
+                    &nbsp;&nbsp;<input style="width: 25%;" type="number" id="description" pInputTextarea [(ngModel)]="gme.operationTotal">
+                </div>
+                <label for="description">Temps Total</label>
+       
+                <div class="field " style="display: flex;">
+                    
+                    <label for="description"> MN </label>&nbsp;
+                    <input style="width: 25%;" type="number" id="description" pInputTextarea [(ngModel)]="gme.timeTotlal" (keyup)="onTimeTotalChange($event)">
+                  
+                    &nbsp; <label for="description"> CMS </label>&nbsp;
+                    <input style="width: 25%;" type="number" id="description" pInputTextarea [(ngModel)]="ms">
+                  
+                    &nbsp;  <label for="description"> S </label>&nbsp;
+                    <input style="width: 25%;" type="number" id="description" pInputTextarea [(ngModel)]="s">
+
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                    (click)="hideDialog()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+                    (click)="saveGamme()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteGammeDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="gme">Are you sure you want to delete <b>{{gme.designation}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="deleteGammeDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                    (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteGammesDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Are you sure you want to delete selected Gammes?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="deleteGammesDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                    (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>

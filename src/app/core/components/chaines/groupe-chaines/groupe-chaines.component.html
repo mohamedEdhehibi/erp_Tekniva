@@ -1,0 +1,167 @@
+<div class="col-12">
+    <app-menu-chaine></app-menu-chaine>
+</div>
+
+   
+      <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+
+            <div class="col-12">
+                <div class="my-2">
+                    <h1 style="text-align: left; font-family:Georgia, 'Times New Roman', Times, serif;">Groupe de chaînes</h1>
+                </div>
+            </div>
+            <p-toolbar styleClass="mb-4">
+
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Ajouter" icon="pi pi-plus" class="p-button-success mr-2"
+                            (click)="openNew()"></button>
+                        <button pButton pRipple label="Supprimer" icon="pi pi-trash" class="p-button-danger"
+                            (click)="deleteSelectedgroupe_chaines()"
+                            [disabled]="!selectedgroupe_chaines || !selectedgroupe_chaines.length"></button>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import"
+                        chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"
+                        (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="groupe_chaines|filter:filtered" [columns]="cols" responsiveLayout="scroll" [rows]="10"
+                [globalFilterFields]="['name','country.name','representative.name','status']" [rows]="10"
+                [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [(selection)]="selectedgroupe_chaines" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0"></h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" [(ngModel)]="filtered" placeholder="Recherche..."
+                                class="w-full sm:w-auto" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem" scope="col">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="code" scope="col">name<p-sortIcon field="code"></p-sortIcon></th>
+                        <th pSortableColumn="name" scope="col">Designation<p-sortIcon field="name"></p-sortIcon></th>
+
+                        <th pSortableColumn="category" scope="col">création<p-sortIcon field="category"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="category" scope="col">Modification<p-sortIcon
+                                field="category"></p-sortIcon></th>
+                        <th pSortableColumn="category" scope="col">Etat <p-sortIcon field="category"></p-sortIcon></th>
+
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-groupe_chaine>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="groupe_chaine"></p-tableCheckbox>
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Nom Groupe</span>
+
+                            {{groupe_chaine.name}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">désignation</span>
+                            {{groupe_chaine.designation}}
+                        </td>
+
+
+
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">date de création </span>
+                            {{groupe_chaine.createdAt |date:'shortDate' }}
+                        </td>
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">date de modification</span>
+                            {{groupe_chaine.updatedAt |date:'shortDate'}}
+                        </td>
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">état</span>
+                            {{groupe_chaine.isActive }}
+                        </td>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-success mr-2"
+                                    (click)="editgroupe_chaine(groupe_chaine.id)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                    (click)="deletegroupe_chaine(groupe_chaine.id)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="groupe_chaineDialog" [style]="{width: '450px'}" header="groupe_chaine Details"
+            [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+
+                <div class="field">
+                    <label for="name">Nom Groupe *</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="groupe_chaine.name" required
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !groupe_chaine.name}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !groupe_chaine.name">Nom de groupe est
+                        obligatoire</small>
+                </div>
+                <div class="field">
+                    <label for="name">Désignation *</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="groupe_chaine.designation" required
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !groupe_chaine.designation}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !groupe_chaine.designation">Désignation est
+                        obligatoire</small>
+                </div>
+
+
+
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text"
+                    (click)="hideDialog()"></button>
+                <button pButton pRipple label="enregistré" icon="pi pi-check" class="p-button-text"
+                    (click)="savegroupe_chaine()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deletegroupe_chaineDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="groupe_chaine">Etes-vous sûr que vous voulez
+                    supprimer?<b>{{groupe_chaine.designation}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="deletegroupe_chaineDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                    (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deletegroupe_chainesDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Voulez-vous vraiment supprimer les produits sélectionnés?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="deletegroupe_chainesDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                    (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+<!-- </div> -->

@@ -1,0 +1,101 @@
+<!-- <h1  style="text-align: center; font-family:Georgia, 'Times New Roman', Times, serif;">Gestion des Machines</h1> -->
+
+<p-toast></p-toast>
+<div class="card">
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <div class="my-2">
+                <button pButton pRipple label="Ajouter" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                <button pButton pRipple label="Supprimer" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedType()" [disabled]="!selectedType || !selectedType.length"></button>
+            </div>
+        </ng-template>
+
+            </p-toolbar>
+    <p-table #dt [value]="types|filter:filtered"  responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedType" selectionMode="multiple" [rowHover]="true" dataKey="id">
+        <ng-template pTemplate="caption">
+            <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                <h5 class="m-0"> Liste des Types</h5>
+                <span class="block mt-2 md:mt-0 p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" [(ngModel)]="filtered"  placeholder="Search..."  class="w-full sm:w-auto"/>
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="code">Type <p-sortIcon field="code"></p-sortIcon></th>
+                <th pSortableColumn="name">Action<p-sortIcon field="name"></p-sortIcon></th>
+                
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-types>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="types"></p-tableCheckbox>
+                </td>
+                <td style="width:10%; min-width:10rem;"><span class="p-column-title">Type</span>
+                    {{types.typeMachine }}
+                </td>
+                <!-- <td style="width:10%; min-width:10rem;">
+                    <span class="p-column-title">Designation</span>
+                    {{machines.designation}}
+                </td> -->
+              <td>
+                    <div class="flex">
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editType(types)"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteType(types)"></button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <p-dialog [(visible)]="typeDialog" [style]="{width: '450px'}" header="Details  Type" [modal]="true" class="p-fluid">
+        <ng-template pTemplate="content">
+            
+            <div class="field">
+                <label for="name">Type*</label>
+                <input type="text" pInputText id="name" [(ngModel)]="type.typeMachine" required  [ngClass]="{'ng-invalid ng-dirty' : submitted && !type.typeMachine}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && type.typeMachine===''">le type est  obligatoire.</small>
+            </div>
+           
+                       
+            <!-- <button pButton pRipple label="+Type" class="p-button-text" ></button> -->
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+            <button pButton pRipple label="enregistré" icon="pi pi-check" class="p-button-text" (click)="saveType()"></button>
+        </ng-template>
+    </p-dialog>
+
+    <div *ngIf="one">
+    <p-dialog [(visible)]="deleteTypeDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+        <div class="flex align-items-center justify-content-center">
+            <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+            <span *ngIf="type">Etes-vous sûr que vous voulez supprimer?<b>{{type.typeMachine}}</b>?</span>
+        </div>
+        <ng-template pTemplate="footer">
+            <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" (click)="deleteTypeDialog = false" ></button>
+            <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteF()"></button>
+        </ng-template>
+    </p-dialog>
+</div>
+    
+    <p-dialog  [(visible)]="deleteTypeDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+        <div class="flex align-items-center justify-content-center">
+            <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+            <span>Voulez-vous vraiment supprimer les Types sélectionnés ?</span>
+        </div>
+        <ng-template pTemplate="footer">
+            <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" (click)="deleteTypeDialog = false"></button>
+            <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)=" confirmDeleteSelected()"></button>
+        </ng-template>
+    </p-dialog>
+
+</div>
+
+

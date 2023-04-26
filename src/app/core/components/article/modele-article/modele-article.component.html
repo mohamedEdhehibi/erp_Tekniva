@@ -1,0 +1,400 @@
+<div class="surface-section px-6 py-6 border-1 surface-border border-round">
+    <p-toast></p-toast>
+    <!-- <span class="text-900 text-xl font-bold mb-4 block">{{msg}}</span> -->
+    <div class="col-12 lg:col-10">
+        <div class="grid formgrid p-fluid">
+            <div class="field mb-4 col-12 md:col-11">
+                <div class="text-900 font-medium text-xl mb-3">information obligatoire</div>
+            </div>
+            <div class="field mb-4 col-12 md:col-1">
+                <button pButton pRipple label="Enregistrer" class="w-auto mt-3"   *ngIf="!update" (click)=" createModel()"></button>
+            </div>
+            <div class="field mb-4 col-12 md:col-1">
+                <button pButton pRipple label="Modifier" class="w-auto mt-3"  *ngIf="update" (click)=" updateModele()"></button>
+            </div>
+            <div class="field mb-4 col-12 md:col-1">
+                <!-- <button pButton pRipple label="Enregistrer" class="w-auto mt-3" (click)=" create()"></button> -->
+            </div>
+        </div>
+    </div>
+    <div class="col-12 lg:col-10">
+        <div class="grid formgrid p-fluid">
+            <!-- <div class="field mb-4 col-12">
+                <label for="nickname" class="font-medium text-900">Code*</label>
+                <input id="nickname" type="text" pInputText [(ngModel)]="model.code">
+            </div> -->
+            <div class="field mb-4 col-12">
+                <label for="nickname" class="font-medium text-900">Réf*</label>
+                <input id="nickname" type="text" pInputText [(ngModel)]="model.reference">
+            </div>
+            <div class="field mb-4 col-12">
+                <label for="nickname" class="font-medium text-900">Designation*</label>
+                <input id="nickname" type="text" pInputText [(ngModel)]="model.designation">
+            </div>
+           
+        </div>
+        <!-- <div class="col-15 lg:col-4">
+            <label for="nickname" class="font-medium text-900">Grid par defaut</label>
+
+            <p-dropdown [(ngModel)]="model.sizeChart" optionValue="value" [options]="gridSelect"
+                placeholder="Select">
+                <ng-template let-option pTemplate="item">
+                    <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                </ng-template>
+            </p-dropdown>
+        </div>
+        <div class="col-15 lg:col-4">
+            <label for="nickname" class="font-medium text-900">Marque</label>
+            <p-dropdown optionValue="value" [(ngModel)]="model.brand" [options]="brandSelect"
+                placeholder="Select">
+                <ng-template let-option pTemplate="item">
+                    <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                </ng-template>
+            </p-dropdown>
+        </div>
+        <div class="col-15 lg:col-4">
+            <label for="nickname" class="font-medium text-900">Season</label>
+            <p-dropdown optionValue="value" [(ngModel)]="model.season" [options]="seasonSelect"
+                placeholder="Select">
+                <ng-template let-option pTemplate="item">
+                    <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                </ng-template>
+            </p-dropdown>
+        </div> -->
+       
+
+    </div>
+    
+   
+
+</div>
+<p-tabView>
+    <p-tabPanel header="Details">
+        <div class="text-900 font-bold text-3xl mb-4 mt-2"> Ajouter Details</div>
+
+        <div class="grid">
+            <div class="grid formgrid p-fluid">
+
+                <div class="col-15 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">categorie de Contole</label>
+                    <input id="nickname" type="text" pInputText [(ngModel)]="model.categorie_controle">
+                </div>
+                <!-- <div class="col-15 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">Famille</label>
+
+                    <p-dropdown [(ngModel)]="article.subFamilyArticleId" optionValue="value" [options]="famSelect"
+                        placeholder="Select">
+                        <ng-template let-option pTemplate="item"  >
+                            <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div> -->
+                <div class="col-15 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">Sous Famille</label>
+                    <p-dropdown [(ngModel)]="model.subFamily" optionValue="value" [options]="subFamSelect"
+                        placeholder="Select" >
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+               
+                <div class="col-15 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">Grid par defaut : </label>
+                    
+                      
+                    <p-dropdown [(ngModel)]="model.sizeChart" optionValue="value" [options]="gridSelect"
+                        placeholder="Select">
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="col-15 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">Marque : </label>
+                    
+                    <p-dropdown optionValue="value" [(ngModel)]="model.brand" [options]="brandSelect"
+                        placeholder="Select">
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="col-15 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">Season : </label>
+                   
+                    <p-dropdown optionValue="value" [(ngModel)]="model.season" [options]="seasonSelect"
+                        placeholder="Select">
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                
+                <div class="col-12 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">Complexité :</label>
+                   
+                    <p-dropdown [(ngModel)]="model.complexity" optionValue="value" [options]="complexitySelect"
+                        placeholder="Select">
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+            </div>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="AQL">
+        <div class="text-900 font-bold text-3xl mb-4 mt-2">Ajouter AQL</div>
+        <div class="grid formgrid p-fluid">
+            <div class="col-15 lg:col-4">
+                <label for="nickname" class="font-medium text-900">AQL Critique</label>
+                <input id="nickname" type="text" pInputText [(ngModel)]="model.AQL_critique">
+            </div>
+            <div class="col-15 lg:col-4">
+                <label for="nickname" class="font-medium text-900">AQL Majeur</label>
+                <input id="nickname" type="text" pInputText [(ngModel)]="model.AQL_majeur">
+            </div>
+            <div class="col-15 lg:col-4">
+                <label for="nickname" class="font-medium text-900">AQL Mineur</label>
+                <input id="nickname" type="text" pInputText [(ngModel)]="model.AQL_mineur">
+            </div>
+            
+        </div>
+    </p-tabPanel>
+    <!-- <p-tabPanel header="Photo">
+        <div class="text-900 font-bold ">Ajouter Photo</div>
+
+        <div class="grid">
+            <div class="col-12 lg:col-7">
+                <p-fileUpload #fileUploader name="demo[]" url="./upload.php" (onUpload)="onUpload($event)"
+                    [customUpload]="true" [multiple]="true" (onSelect)="onUpload($event)" accept="image/*"
+                    [showUploadButton]="true" [showCancelButton]="false" [auto]="true"
+                    styleClass="border-1 surface-border surface-card border-round">
+                    <ng-template pTemplate="content">
+                        <div class="h-15rem overflow-y-auto py-3 border-round" style="cursor: copy"
+                            (click)="fileUploader.advancedFileInput.nativeElement.click()">
+                            <div class="flex flex-column w-full h-full justify-content-center align-items-center">
+                                <i class="pi pi-file text-4xl text-primary"></i>
+                                <span class="block font-semibold text-900 text-lg mt-3">Drop or select images</span>
+                            </div>
+                            <div class="flex flex-wrap gap-3 border-round"
+                                *ngFor="let file of images; let i = index;">
+                                <div class="h-full relative w-7rem h-7rem border-3 border-transparent border-round hover:bg-primary transition-duration-100 cursor-auto"
+                                    (mouseenter)="onImageMouseOver(file)" (mouseleave)="onImageMouseLeave(file)"
+                                    style="pAjoutering: 1px;">
+                                    <img [src]="file.objectURL" class="w-full h-full border-round shadow-2"
+                                        [alt]="file.name">
+                                    <button [id]="file.name" #buttonEl pButton pRipple type="button"
+                                        icon="pi pi-times"
+                                        class="p-button-rounded p-button-primary text-sm absolute justify-content-center align-items-center cursor-pointer h-auto"
+                                        style="top: -10px; right: -10px; display: none;"
+                                        (click)="$event.stopPropagation()"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-fileUpload>
+            </div>
+        </div>
+    </p-tabPanel> -->
+    <p-tabPanel header="Pcs joints">
+        <div class="text-900 font-bold text-3xl mb-4 mt-2">Ajouter Pcs</div>
+
+        <!-- <div class="grid">
+            <div class="grid">
+                <div class="col-12">
+                    <div class="card"> -->
+                        <!-- <h5>Advanced</h5> -->
+                        <!-- <p-fileUpload name="demo[]" url="./upload.php" (onUpload)="onUploadFile($event)"
+                            [multiple]="true" accept="image/*" [maxFileSize]="1000000"> -->
+                            <!-- <ng-template pTemplate="content">
+                                            <ul *ngIf="uploadedFiles.length">
+                                                <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                                            </ul>
+                                        </ng-template> -->
+                        <!-- </p-fileUpload> -->
+
+                        <!-- <h5>Basic</h5> -->
+                        <!-- <p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" [maxFileSize]="1000000" ></p-fileUpload> -->
+
+                    <!-- </div> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </div> -->
+    </p-tabPanel>
+    <p-tabPanel header="Code à barre">
+        <div class="text-900 font-bold text-3xl mb-4 mt-2">Ajouter un code à barre </div>
+        <!-- <div class="grid" *ngFor="let al of qrCodeArray; let i = index">
+            <div class="grid formgrid p-fluid">
+                <div class="col-15 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">Code à barre </label>
+                    <input id="nickname" type="text" pInputText >
+                </div>
+                <div class="col-15 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">Grille de taille </label>
+
+                    <p-dropdown [(ngModel)]="model.sizeChart" optionValue="value" [options]="gridSelect"
+                        placeholder="Select">
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <!-- <div class="col-15 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">Taille </label>
+
+                    <p-dropdown [(ngModel)]="codebarre.size" optionValue="value" [options]="sizeSelect"
+                        placeholder="Select">
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div> -->
+                <!-- <div class="col-12 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">Couleur </label>
+                    <p-dropdown [(ngModel)]="article.color" optionValue="value" [options]="colorSelect"
+                        placeholder="Select">
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div> 
+                <br>
+            </div>
+            <div style="width: 3cm;height: 1cm!important;">
+
+                <ngx-barcode [bc-value]="codebarre.code" [bc-display-value]="true"></ngx-barcode>
+            </div>
+            <div class="col-12 col-md-6">
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+                <button pButton pRipple label="ajouter" type="button" (click)="addQr()"></button>
+                <button *ngIf="i != 0" pButton pRipple type="button" label="Supprimer" (click)="deleteQr(i)"
+                    class="p-button-danger"></button>
+                <button pButton pRipple type="button" label="Valider" class="p-button-success"></button>
+
+                <br>
+            </div>
+            <br>
+        </div> -->
+        <br>
+
+
+
+    </p-tabPanel>
+    <!-- <p-tabPanel header="Phases">
+        <div class="text-900 font-bold text-3xl mb-4 mt-2">Ajouter Phase</div>
+
+        <div class="col-15 lg:col-6">
+            <label for="nickname" class="font-medium text-900">Choix du Phase </label>
+
+            <p-dropdown [(ngModel)]="article.phase" optionValue="value" [options]="phase" placeholder="Select">
+                <ng-template let-option pTemplate="item">
+                    <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                </ng-template>
+            </p-dropdown>
+        </div>
+        <div class="card flex justify-content-center" *ngIf="article.phase">
+            <p-selectButton [options]="sabPhase" [(ngModel)]="value" [multiple]="true" optionLabel="name"
+                optionValue="value"></p-selectButton>
+        </div>
+
+    </p-tabPanel> -->
+    <p-tabPanel header="Facturation">
+        <div class="text-900 font-bold text-3xl mb-4 mt-2">Facturation</div>
+        <div class="grid">
+            <div class="grid formgrid p-fluid">
+                 <!-- <div class="col-15 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">Prix Facturation</label>
+                    <input id="nickname" type="text" pInputText>
+                </div>
+                <div class="col-15 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">Poids Brute</label>
+                    <input id="nickname" type="text" pInputText>
+                </div>
+                <div class="col-15 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">Poids Net</label>
+                    <input id="nickname" type="text" pInputText>
+                </div>  -->
+                <div class="col-12 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">TVA</label>
+                    
+                    <p-dropdown [(ngModel)]="model.tva" optionValue="value" 
+                    [options]="tvaSelect" 
+                        placeholder="Select">
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="col-12 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">Remise</label>
+                                   <p-dropdown [(ngModel)]="model.discount" optionValue="value" 
+                                   [options]="discountSelect"
+                        placeholder="Select">
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+
+            </div>
+        </div>
+    </p-tabPanel>
+    <!-- <p-tabPanel header="Code à barre">
+        <div class="text-900 font-bold text-3xl mb-4 mt-2">Ajouter un code à barre </div>
+        <div class="grid" *ngFor="let al of qrCodeArray; let i = index">
+            <div class="grid formgrid p-fluid">
+                <div class="col-15 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">Code à barre </label>
+                    <input id="nickname" type="text" pInputText [(ngModel)]="article.bar_code">
+                </div>
+                <div class="col-15 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">Grille de taille </label>
+
+                    <p-dropdown [(ngModel)]="model.sizeChart" optionValue="value" [options]="gridSelect"
+                        placeholder="Select">
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="col-15 lg:col-4">
+                    <label for="nickname" class="font-medium text-900">Taille </label>
+
+                    <p-dropdown [(ngModel)]="codebarre.size" optionValue="value" [options]="sizeSelect"
+                        placeholder="Select">
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'chaine-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                
+                <br>
+            </div>
+            <div style="width: 3cm;height: 1cm!important;">
+
+                <ngx-barcode [bc-value]="codebarre.code" [bc-display-value]="true"></ngx-barcode>
+            </div>
+            <div class="col-12 col-md-6">
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+                <button pButton pRipple label="ajouter" type="button" (click)="addQr()"></button>
+                <button *ngIf="i != 0" pButton pRipple type="button" label="Supprimer" (click)="deleteQr(i)"
+                    class="p-button-danger"></button>
+                <button pButton pRipple type="button" label="Valider" class="p-button-success"></button>
+
+                <br>
+            </div>
+            <br>
+        </div>
+        <br>
+
+
+
+    </p-tabPanel> -->
+   
+</p-tabView>

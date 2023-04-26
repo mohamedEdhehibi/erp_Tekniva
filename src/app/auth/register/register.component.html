@@ -1,0 +1,49 @@
+<p-toast></p-toast>
+<div class="flex h-screen">
+    <div class="w-full lg:w-4 h-full text-center px-6 py-6 flex flex-column justify-content-between">
+        <img [src]="'assets/layout/images/logo-dark.svg'" class="h-4rem mt-4" alt="diamond-layout" />
+
+        <div class="flex flex-column align-items-center gap-4">
+            <div class="mb-3">
+                <h2>S’inscrire</h2>
+                <p>C’est rapide et facile.</p>
+            </div>
+
+            <div class="flex flex-column gap-4">
+                <span class="p-input-icon-left w-full">
+                    <i class="pi pi-user"></i>
+                    <input id="username" type="text" pInputText class="w-full md:w-25rem"  [(ngModel)]="user.login" placeholder="Identifiant">
+                </span>
+                <span class="p-input-icon-left w-full">
+                    <i class="pi pi-envelope"></i>
+                    <input id="email" type="text" pInputText class="w-full md:w-25rem"  [(ngModel)]="user.email" placeholder="E-mail">
+                </span>
+                <span class="p-input-icon-left w-full">
+                    <i class="pi pi-lock"></i>
+                    <input id="password" type="password" pInputText class="w-full md:w-25rem"  [(ngModel)]="user.password" placeholder="Mot de Passe">
+                </span>
+                <div class="flex flex-wrap">
+                    <p-checkbox name="checkbox" value="val" [(ngModel)]="confirmed" styleClass="mr-2" [binary]="true"></p-checkbox>
+                    <label for="checkbox" class="text-color font-semibold mr-2">J'ai lu les</label>
+                    <a class="text-color-secondary font-semibold cursor-pointer hover:text-primary cursor-pointer">Termes et Conditions</a>
+                </div>
+                <button pButton pRipple label="S’inscrire" class="w-full mb-4" (click)="signup()"></button>
+                <span class="font-semibold text-color-secondary">
+                    Vous avez déjà un compte?  <a routerLink="/auth/login" class="font-semibold cursor-pointer primary-color">
+                     Connexion</a></span>
+            </div>
+        </div>
+
+        <p class="text-color-secondary font-semibold">
+            Un problème? <a href="#" class="primary-color">Cliquez ici</a> 
+            et laissez-nous vous aider.</p>
+    </div>
+    <div class="w-8 hidden lg:flex flex-column justify-content-between align-items-center px-6 py-6 bg-cover bg-norepeat" style="background-image: url('assets/demo/images/auth/bg-login.jpg')">
+        <div class="mt-auto mb-auto">
+            <span class="block text-white text-7xl font-semibold">Create a<br/>Diamond<br/>Account</span>
+            <span class="block text-white text-3xl mt-4">Lorem ipsum dolor sit amet, consectetur<br/> adipiscing elit. Donec posuere velit nec enim<br/> sodales, nec placerat erat tincidunt. </span>
+        </div>
+    </div>
+</div>
+
+<app-config [minimal]="true"></app-config>

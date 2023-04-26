@@ -1,0 +1,22 @@
+{
+    "data": [
+        {
+            "id": "1",
+            "designation": "famille coupage",
+            "code": "ACO"
+          
+        },
+        {
+            "id": "2",
+            "designation": "famille soudure",
+            "code": "ASO"
+          
+        },
+        {
+            "id": "3",
+            "designation": "famille scie",
+            "code": "ASC"
+          
+        }
+    ]
+}

@@ -1,0 +1,133 @@
+<div class="col-12">
+    <app-menu></app-menu>
+</div>
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <div class="col-12">
+                <div class="my-2">
+                    <h1
+                        style="text-align: left ; font-family:Georgia, 'Times New Roman', Times, serif;margin-left:10px;">
+                        Liste de spécialité</h1>
+                </div>
+            </div>
+            <div class="col-12">
+                <p-toolbar styleClass="mb-4">
+                    <ng-template pTemplate="left">
+                        <div class="my-2">
+                            <button pButton pRipple label="Ajouter" icon="pi pi-plus" class="p-button-success mr-2"
+                                (click)="openNew()"></button>
+                            <button pButton pRipple label="Supprimer" icon="pi pi-trash" class="p-button-danger"
+                                (click)="deleteSelectedSpecialitys()"
+                                [disabled]="!selectedSpecialitys|| !selectedSpecialitys.length"></button>
+                        </div>
+                    </ng-template>
+
+                    <ng-template pTemplate="right">
+                        <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import"
+                            chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                        <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"
+                            (click)="dt.exportCSV()"></button>
+                    </ng-template>
+                </p-toolbar>
+                <div class="card">
+
+                    <p-table #dt [value]="specialitys|filter:filtered" [columns]="cols" responsiveLayout="scroll"
+                        [rows]="10" [globalFilterFields]="['speciality.speciality','speciality.employeess']" [rows]="10"
+                        [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        [(selection)]="selectedSpecialitys" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                        <ng-template pTemplate="caption">
+                            <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                                <h5 class="m-0"></h5>
+                                <span class="block mt-2 md:mt-0 p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text" [(ngModel)]="filtered" placeholder="Search..."
+                                        class="w-full sm:w-auto" />
+
+                                </span>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 3rem">
+                                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                </th>
+                                <th pSortableColumn="fullName" class="white-space-nowrap" style="width:25%">
+                                    Spécialité<p-sortIcon field="fullName"></p-sortIcon></th>
+
+                                <th style="width:25%">Actions</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-speciality>
+                            <tr>
+                                <td>
+                                    <p-tableCheckbox [value]="speciality"></p-tableCheckbox>
+                                </td>
+                                <td>{{speciality.speciality}}</td>
+
+
+                                <td>
+                                    <div class="flex">
+                                        <button pButton pRipple icon="pi pi-pencil"
+                                            class="p-button-rounded p-button-success mr-2"
+                                            (click)="getSpecialitybyid(speciality.id)"></button>
+                                        <button pButton pRipple icon="pi pi-trash"
+                                            class="p-button-rounded p-button-warning"
+                                            (click)="deleteSpeciality(speciality.id)"></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+        <p-dialog [(visible)]="specialityDialog" [style]="{width: '450px'}" header="Créer une spécialité" [modal]="true"
+            class="p-fluid">
+            <ng-template pTemplate="content">
+
+                <div class="field">
+                    <label for="name">Spécialité</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="speciality.speciality" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !speciality.speciality}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !speciality.speciality">speciality is
+                        required.</small>
+                </div>
+
+
+
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text"
+                    (click)="hideDialog()"></button>
+                <button pButton pRipple label="Enregistrer" icon="pi pi-check" class="p-button-text"
+                    (click)="createSpeciality()"></button>
+            </ng-template>
+        </p-dialog>
+        <p-dialog [(visible)]="deleteSpecialityDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="speciality">Voulez-vous vraiment supprimer cette Specialité <b></b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="deleteSpecialityDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                    (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+        <p-dialog [(visible)]="deleteSpecialitysDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Voulez-vous vraiment supprimer les spécialités sélectionnés ?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non"
+                    (click)="deleteSpecialityDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui"
+                    (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>

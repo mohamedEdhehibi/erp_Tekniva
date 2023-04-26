@@ -1,0 +1,154 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <div class="col-12">
+              <div class="card">
+                <h5>Liste des Rôles</h5>
+                <p-toast></p-toast>
+                <p-table [value]="models" dataKey="id" [expandedRowKeys]="expandedRows" responsiveLayout="scroll">
+                  <ng-template pTemplate="caption">
+                    <button  pButton icon="pi pi-fw {{isExpanded ? 'pi-minus' : 'pi-minus'}}" label="{{isExpanded ? 'Collapse ' : 'Collapse'}}" (click)="expandAll()"></button>
+                    <button pButton pRipple label="Ajouter" icon="pi pi-plus" class="p-button-success ml-2" routerLink="/article/add_article"></button>
+                    <button   pButton pRipple label="Exporter" icon="pi pi-file-excel"  class="p-button-warning ml-2"  (click)="exportToExcel(allData)"></button>
+                    <div class="flex table-header">
+                    </div>
+                  </ng-template>
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th> </th>
+                      <th pSortableColumn="Désignation">Désignation <p-sortIcon field="Désignation"></p-sortIcon></th>
+                      <th pSortableColumn="Réference">Réference<p-sortIcon field="Réference"></p-sortIcon></th>
+                      <th pSortableColumn="Marque">Marque <p-sortIcon field="Marque"></p-sortIcon></th>
+                      <th pSortableColumn="Taille">Taille <p-sortIcon field="Taille"></p-sortIcon></th>
+                      <th pSortableColumn="Sous-Famille">Sous-Famille <p-sortIcon field="Sous-Famille"></p-sortIcon></th>
+                      <th pSortableColumn="Saison">Saison <p-sortIcon field="Saison"></p-sortIcon></th>
+                      <th pSortableColumn="Remise">Remise <p-sortIcon field="Remise"></p-sortIcon></th>
+                      <th pSortableColumn="TVA">TVA <p-sortIcon field="TVA"></p-sortIcon></th>
+                      <th pSortableColumn="Complexité">Complexité <p-sortIcon field="Complexité"></p-sortIcon></th>
+                      <th ></th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-product let-expanded="expanded">
+                    <tr>
+                      <td>
+                        <button  (click)="expandAll();getArticlebyModel(product.id)" type="button" pButton pRipple class="p-button-text p-button-rounded p-button-plain" [icon]="expandedRows[product.id] ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                      </td>
+                      <td style="min-width: 12rem;">{{product.designation}}</td>
+                      <td style="min-width: 12rem;">{{product.reference}}</td>
+                      <td style="min-width: 8rem;">{{product.brand?.designation}}</td>
+                      <td style="min-width: 10rem;">{{product.sizeChart?.designation}}</td>
+                      <td style="min-width: 10rem;">{{product.subFamily?.designation}}</td>
+                      <td style="min-width: 10rem;">{{product.season?.designation}}</td>
+                      <td style="min-width: 10rem;">{{product.discount?.designation}}</td>
+                      <td style="min-width: 10rem;">{{product.tva?.designation}}</td>
+                      <td style="min-width: 10rem;">{{product.complexity?.designation}}</td>
+                      <td>
+                        <div class="flex">
+                          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="EditNavigateModel(product.id)" ></button>
+                          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteModel(product.id)"></button>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="rowexpansion" let-product>
+                    <tr>
+                      <td colspan="7">
+                        <div class="p-3">
+                          <p-table [value]="articles"  responsiveLayout="scroll">
+                            <ng-template pTemplate="header">
+                              <tr >
+                                <th pSortableColumn="id">Désignation <p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="customer">Réference <p-sortIcon field="customer"></p-sortIcon></th>
+                                <th pSortableColumn="date">Code <p-sortIcon field="date"></p-sortIcon></th>
+                                <th pSortableColumn="stats">Type <p-sortIcon field="status"></p-sortIcon></th>
+                                <th pSortableColumn="amount">Code à Barre <p-sortIcon field="amount"></p-sortIcon></th>
+                                <th style="width: 4rem"></th>
+                              </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-order >
+                    <tr *ngIf="expandedRows[product.id] == true">
+                      <td>{{order.designation}}</td>
+                      <td>{{order.reference}}</td>
+                      <td>{{order.code}}</td>
+                      <td>{{order.type }}</td>
+                      <td>{{order.bar_code}}</td>
+                      <td>  <div class="flex">
+                      	<button pButton pRipple type="button" icon="pi pi-eye" class="p-button-rounded p-button-primary mr-2" (click)="detailNavigate(order.id)" ></button>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="EditNavigate(order.id)" ></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteArticle(order.id)"></button>
+                      </div></td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="emptymessage">
+                    <tr>
+                      <td colspan="6">There are no order for this product yet.</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+              </td>
+              </tr>
+              </ng-template>
+              </p-table>
+            </div>
+            </div>
+
+        <p-dialog [(visible)]="ArticleDialog" [style]="{width: '450px'}" header="Nouveau Rôle" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+
+                <div class="field">
+                    <label for="name">Nom du rôle</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="article.designation" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !article.designation}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !article.designation">Name is required.</small>
+                </div>
+                <div class="field">
+                    <label for="description">Date de création</label>
+                    <p-calendar id="description" [showIcon]="true" inputId="icon" ></p-calendar>    
+                </div>
+                <div class="field">
+                    <label for="description">Créer Par</label>
+                    <textarea type="text" id="description" pInputTextarea ></textarea>
+                </div>
+                <div class="field">
+                    <label for="description">Localité</label>
+                    <textarea type="text" id="description" pInputTextarea  ></textarea>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteModelDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="model">Etes-vous sûr que vous voulez supprimer <b>{{model.designation}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteModelDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteModel()"></button>
+            </ng-template>
+        </p-dialog>
+        <p-dialog [(visible)]="deleteArticleDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="article">Etes-vous sûr que vous voulez supprimer <b>{{article.designation}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteArticleDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+   
+    </div>
+</div>
+
+
+
+
+
+

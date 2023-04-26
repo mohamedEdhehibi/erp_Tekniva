@@ -1,0 +1,129 @@
+<div class="col-12">
+    <app-menu></app-menu>
+</div>
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <div class="col-12">
+                <div class="my-2">
+                    <h1
+                        style="text-align: left ; font-family:Georgia, 'Times New Roman', Times, serif;margin-left:10px;">
+                        Liste de titre</h1>
+                </div>
+            </div>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Ajouter" icon="pi pi-plus" class="p-button-success mr-2"
+                            (click)="openNew()"></button>
+                        <button pButton pRipple label="Supprimer" icon="pi pi-trash" class="p-button-danger"
+                            (click)="deleteSelectedJobs()" [disabled]="!selectedJobs|| !selectedJobs.length"></button>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import"
+                        chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"
+                        (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar>
+            <div class="card">
+
+                <p-table #dt [value]="jobs|filter:filtered" [columns]="cols" responsiveLayout="scroll" [rows]="10"
+                    [globalFilterFields]="['job.designation','job.description']" [rows]="10" [paginator]="true"
+                    [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    [(selection)]="selectedJobs" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                    <ng-template pTemplate="caption">
+                        <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                            <h5 class="m-0"></h5>
+                            <span class="block mt-2 md:mt-0 p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" [(ngModel)]="filtered" placeholder="Search..."
+                                    class="w-full sm:w-auto" />
+
+                            </span>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 3rem"> <p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+                            <th pSortableColumn="fullName" class="white-space-nowrap" style="width:25%">Désignation
+                                <p-sortIcon field="fullName"></p-sortIcon></th>
+                            <th pSortableColumn="createdAt" class="white-space-nowrap" style="width:25%">Déscription
+                                <p-sortIcon field="createdAt"></p-sortIcon></th>
+                            <th style="width:25%">Actions</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-job>
+                        <tr>
+                            <td>
+                                <p-tableCheckbox [value]="job"></p-tableCheckbox>
+                            </td>
+                            <td>{{job.designation}}</td>
+                            <td>{{job.description}}</td>
+
+
+                            <td>
+                                <div class="flex">
+                                    <button pButton pRipple icon="pi pi-pencil"
+                                        class="p-button-rounded p-button-success mr-2"
+                                        (click)="getJobbyid(job.id)"></button>
+                                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                        (click)="deleteJob(job.id)"></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>
+<p-dialog [(visible)]="jobDialog" [style]="{width: '450px'}" header="Créer un titre" [modal]="true" class="p-fluid">
+    <ng-template pTemplate="content">
+
+        <div class="field">
+            <label for="name">Désignation</label>
+            <input type="text" pInputText id="name" [(ngModel)]="job.designation" required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !job.description}" />
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !job.description">training is
+                required.</small>
+        </div>
+
+        <textarea rows="5" cols="30" pInputTextarea [(ngModel)]="job.description"></textarea>
+
+
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text"
+            (click)="hideDialog()"></button>
+        <button pButton pRipple label="Enregistrer" icon="pi pi-check" class="p-button-text"
+            (click)="createJob()"></button>
+    </ng-template>
+</p-dialog>
+<p-dialog [(visible)]="deleteJobDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <span *ngIf="job">Voulez-vous vraiment supprimer ce titre <b></b>?</span>
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+            (click)="deleteJobDialog = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+    </ng-template>
+</p-dialog>
+<p-dialog [(visible)]="deleteJobsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <span>Voulez-vous vraiment supprimer les titres sélectionnés ?</span>
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non"
+            (click)="deleteJobDialog = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui"
+            (click)="confirmDeleteSelected()"></button>
+    </ng-template>
+</p-dialog>

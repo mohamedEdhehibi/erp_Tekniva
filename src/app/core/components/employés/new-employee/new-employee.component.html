@@ -1,0 +1,227 @@
+<div class="col-12">
+   
+    <app-menu></app-menu>
+</div>
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+        
+<div class="col-12">
+<div class="grid">
+    <div class="col-12">
+        <div class="col-xs-3 col-md-5">
+            
+        </div>
+      
+        <div >
+            <p-button label="Valider" icon="pi pi-check" iconPos="left" (click)=" createEmployee()"
+            style="margin-left: 35cm;"></p-button>
+            <h2  style="text-align: center; font-family:Georgia, 'Times New Roman', Times, serif;">{{msg}}</h2>
+         
+        </div>
+        <div class="card px-12 py-12">
+
+            <p-toast></p-toast>
+
+                <div class="grid formgrid p-fluid">
+                    <div class="field mb-6 col-12">
+                        <label for="nickname" class="font-medium text-900">Matricule <abbr
+                                title="(obligatoire)">*</abbr></label>
+                        <input id="nickname" type="number" pInputText [(ngModel)]="employee.registrationNumber">
+                    </div>
+
+
+                    <div class="field mb-6 col-6 md:col-6">
+                        <label for="email" class="font-medium text-900">Nom <abbr title="(obligatoire)">*</abbr></label>
+                        <input id="email" type="text" pInputText [(ngModel)]="employee.lastName">
+                    </div>
+
+                    <div class="field mb-6 col-6 md:col-6">
+                        <label for="city" class="font-medium text-900">Prénom <abbr
+                                title="(obligatoire)">*</abbr></label>
+                        <input id="city" type="text" pInputText [(ngModel)]="employee.firstName">
+                    </div>
+
+                    <div class="field mb-6 col-6 md:col-6">
+                        <label for="description">Chaine <abbr title="(obligatoire)">*</abbr></label>
+                        <p-dropdown [(ngModel)]="employee.chaines" optionValue="label" optionLabel="label" #hh
+                            [options]="selectedChaine" placeholder="Select">
+                            <ng-template let-options pTemplate="item">
+                                <span [class]="options.label">{{options.label}}</span>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+   
+    
+
+
+                  <div class="field mb-6 col-6 md:col-6">
+                        <label for="description">Spécialité <abbr title="(obligatoire)">*</abbr></label>
+                        <p-dropdown [(ngModel)]="employee.specialities" optionValue="value" [options]="SpecialiteSelect"
+                            placeholder="Select">
+                            <ng-template let-options pTemplate="item">
+                                <span [class]="options.label">{{options.label}}</span>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+
+                </div>
+                <p-tabView>
+                    <p-tabPanel header="GÉNÉRALES">
+                        <div class="grid formgrid p-fluid">
+
+                            <div class="field mb-4 col-12 md:col-6">
+                                <label for="city" class="font-medium text-900">Sexe</label>
+                                <p-dropdown [options]="genres" [(ngModel)]="employee.gender"></p-dropdown>
+                            </div>
+                            <div class="field mb-4 col-12 md:col-6">
+                                <label for="city" class="font-medium text-900">Status</label>
+
+                                <p-dropdown [options]="statuus" [(ngModel)]="employee.status"></p-dropdown>
+                            </div>
+
+                            <div class="field mb-4 col-12 md:col-6">
+                                <label for="city" class="font-medium text-900">Allure</label>
+                                <input id="city" type="text" pInputText [(ngModel)]="employee.speed">
+                            </div>
+
+
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="CONTRAT">
+                        <div class="grid formgrid p-fluid">
+                            <div class="field mb-4 col-6 md:col-6">
+                                <label for="state" class="font-medium text-900">Date de naissance</label>
+                                <input id="state" type="date" pInputText [(ngModel)]="employee.birthDate">
+                            </div>
+                            <div class="field mb-4 col-12 md:col-6">
+                                <label for="state" class="font-medium text-900">Téléphone</label>
+                                <input id="state" type="text" pInputText [(ngModel)]="employee.phone">
+                            </div>
+
+                            <div class="field mb-4 col-12 md:col-6">
+                                <label for="state" class="font-medium text-900">Adresse</label>
+                                <input id="state" type="text" pInputText [(ngModel)]="employee.address">
+                            </div>
+                            <div class="field mb-4 col-6 md:col-6">
+                                <label for="state" class="font-medium text-900">Date d'embauche</label>
+                                <input id="state" type="date" pInputText [(ngModel)]="employee.hireDate">
+                            </div>
+                            <div class="field mb-4 col-12 md:col-6">
+                                <label for="city" class="font-medium text-900">Etat civil </label>
+
+                                <p-dropdown [options]="familys" [(ngModel)]="employee.familySituation"></p-dropdown>
+                            </div>
+                            <div class="field mb-4 col-12 md:col-6">
+
+                                <label for="state" class="font-medium text-900">Nombre d'enfants</label>
+                                <input id="state" type="text" pInputText [(ngModel)]="employee.childrenNumber">
+                            </div>
+
+                            <div class="field mb-4 col-12 md:col-6">
+                                <label for="state" class="font-medium text-900">C.I.N</label>
+                                <input id="state" type="text" pInputText [(ngModel)]="employee.cin">
+                            </div>
+                            <div class="field mb-4 col-12 md:col-6">
+                                <label for="state" class="font-medium text-900">Passeport</label>
+                                <input id="state" type="text" pInputText [(ngModel)]="employee.passport">
+                            </div>
+                            <div class="field mb-4 col-12 md:col-6">
+                                <label for="city" class="font-medium text-900">Contrat</label>
+                                <p-dropdown [options]="contrats" [(ngModel)]="employee.typeContrart"></p-dropdown>
+                            </div>
+                            <div class="field mb-4 col-12 md:col-6">
+                                <label for="state" class="font-medium text-900">Type de salaire</label>
+
+                                <p-dropdown [options]="salarys" [(ngModel)]="employee.salaryType"></p-dropdown>
+                            </div>
+                            <div class="field mb-4 col-12 md:col-6">
+                                <label for="city" class="font-medium text-900">Salaire</label>
+                                <input id="city" type="text" pInputText [(ngModel)]="employee.salary">
+                            </div>
+                            <div class="field mb-4 col-12 md:col-6">
+                                <label for="city" class="font-medium text-900">Rib</label>
+                                <input id="city" type="text" pInputText [(ngModel)]="employee.rib">
+                            </div>
+                            <div class="field mb-4 col-12 md:col-6">
+                                <label for="city" class="font-medium text-900">CNSS</label>
+                                <input id="city" type="text" pInputText [(ngModel)]="employee.cnss">
+                            </div>
+
+                            <div class="field mb-4 col-12 md:col-6">
+                                <label for="city" class="font-medium text-900">Banque</label>
+                                <input id="city" type="text" pInputText [(ngModel)]="employee.bank">
+                            </div>
+
+                            <div class="field mb-4 col-12 md:col-6">
+                                <label for="description">Titre </label>
+                                <p-dropdown [(ngModel)]="employee.job " optionValue="value" optionLabel="label"
+                                    [options]="selectedJob" placeholder="Select">
+                                    <ng-template let-options pTemplate="item">
+                                        <span [class]="options.label">{{options.label}}</span>
+                                    </ng-template>
+                                </p-dropdown>
+                            </div>
+                            <div class="field mb-4 col-6">
+                                <label for="Photo" class="font-medium text-900">Photo</label>
+                                <p-fileUpload mode="basic" name="Photo" url="./upload.php" accept="image/*"
+                                    [maxFileSize]="1000000" styleClass="p-button-outlined p-button-plain"
+                                    chooseLabel="Upload Image"></p-fileUpload>
+                            </div>
+
+                        </div>
+
+                    </p-tabPanel>
+                    <p-tabPanel header="DOCUMENTS">
+                        <button (click)="createDocument()"> create </button>
+                        <div class="grid formgrid p-fluid">
+
+                            <div class="field mb-4 col-12 md:col-6">
+                                <label for="city" class="font-medium text-900">Nom</label>
+                                <input id="city" type="text" pInputText [(ngModel)]="document.nameDocument">
+                            </div>
+                            <div class="field mb-4 col-12 md:col-6">
+                                <label for="city" class="font-medium text-900">Date de fin</label>
+                                <input id="city" type="date" pInputText [(ngModel)]="document.endDate">
+                            </div>
+                            <br>
+
+
+                            <div><label for="pièce jointe" class="font-medium text-900">Pièce jointe</label>
+                                <div class="text-900 font-bold text-3xl mb-6 mt-6">
+                                    <div class="grid">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <p-fileUpload name="demo[]" url="./upload.php"
+                                                    (onUpload)="onUploadFile($event)" [multiple]="true" accept="image/*"
+                                                    [maxFileSize]="1000000">
+
+                                                </p-fileUpload>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="FORMATION">
+                        <div class="grid formgrid p-fluid">
+
+                            <div class="field mb-6 col-6 md:col-6">
+                                <label for="description">Formation </label>
+                                <p-dropdown [(ngModel)]="employee.trainings " optionValue="value" optionLabel="label"
+                                    [options]="selectedTraining" placeholder="Select">
+                                    <ng-template let-options pTemplate="item">
+                                        <span [class]="options.label">{{options.label}}</span>
+                                    </ng-template>
+                                </p-dropdown>
+                            </div>
+                          
+                        </div>
+                    </p-tabPanel>
+                </p-tabView>
+            
+        </div>
+        </div>
+    </div>

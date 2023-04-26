@@ -1,0 +1,22 @@
+{
+    "data": [
+        {
+            "id": "1",
+            "designation": "Sous famille 1",
+            "code": "XRXX"
+          
+        },
+        {
+            "id": "2",
+            "designation": "Sous famille 2",
+            "code": "MPXS"
+          
+        },
+        {
+            "id": "3",
+            "designation": "Sous famille 3",
+            "code": "MPKT"
+          
+        }
+    ]
+}

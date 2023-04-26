@@ -1,0 +1,15 @@
+{
+	"data": [
+        {
+            "idGroupChain":"d17",
+            "name": "groupe A",
+            "designation": "coupage",
+            "createdBy":"mohamed",
+            "isActive":true,
+            "createdAt":"23/04/2023",
+            "updateAt":"24/04/2023" 
+        }
+       
+		
+	]
+}
